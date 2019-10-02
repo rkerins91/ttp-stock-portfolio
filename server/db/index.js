@@ -1,12 +1,6 @@
-const Sequelize = require('sequelize')
-const User = require('./models/Users')
-const Transaction = require('./models/Transactions')
+const db = require('./db')
 
-User.hasMany(Transaction)
-Transaction.belongsTo(User)
+// register models
+require('./models')
 
-const db = new Sequelize('postgres://localhost:5432/stocks', {
-    logging: false
-})
-
-module.exports = { db, User, Transaction}
+module.exports = db
