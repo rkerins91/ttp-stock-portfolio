@@ -10,11 +10,12 @@ const createApp = () => {
 
   app.use(express.json({ extended: false }))
 
-  app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public', 'index.html'));
-  });
+  // app.get('/', (req, res) => {
+  //   res.sendFile(path.join(__dirname, '../public', 'index.html'));
+  // });
 
   app.use('/api/users', require('./api/users'))
+  app.use('/api/auth', require('./api/auth'))
 }
 
 const syncDb = () => db.sync()
