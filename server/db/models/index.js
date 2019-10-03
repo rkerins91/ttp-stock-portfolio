@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 const User = require('./User')
 const Transaction = require('./Transaction')
 
-// User.hasMany(Transaction)
-// Transaction.belongsTo(User)
+User.hasMany(Transaction)
+Transaction.belongsTo(User)
 
 module.exports = { User, Transaction }
