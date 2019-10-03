@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const auth = require('../../middleware/auth')
 const { check, validationResult } = require('express-validator')
 const User = require('../db/models/User')
 const { JWTSECRET } = require('../../secrets')
@@ -26,7 +27,6 @@ router.post('/', [
   const securePassword = await bcrypt.hash(password, salt)
 
   try {
-    console.log(JWTSECRET)
     const user = await User.create({name, email, password: securePassword})
     const payload = {
       user: {
@@ -51,6 +51,17 @@ router.post('/', [
       next(error)
     }
   }
-
 })
+
+router.get('/:id/portfolio', auth, async (req, res) => {
+  try {
+    const id = req.body.id
+    const user = await User.findOne({
+      where: {id}
+    })
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 module.exports = router
