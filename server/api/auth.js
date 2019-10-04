@@ -22,6 +22,7 @@ router.post('/', [
   check('email', 'Please include a valid email').isEmail(),
   check('password', 'Password is required').exists()
 ], async (req, res, next) => {
+
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({errors: errors.array()})
@@ -54,7 +55,7 @@ router.post('/', [
       { expiresIn: 360000 },
       (error, token) => {
         if (error) throw error
-        res.json({ token })
+        res.json({ token, name: user.name, id: user.id, email: user.email, accountBalance: user.accountBalance })
       }
     )
   } catch (error) {

@@ -23,7 +23,7 @@ router.post('/', [
 
   const { name, email, password } = req.body
 
-  const salt = await bcrypt.genSalt(3)
+  const salt = await bcrypt.genSalt(10)
   const securePassword = await bcrypt.hash(password, salt)
 
   try {
