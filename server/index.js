@@ -13,9 +13,16 @@ const createApp = () => {
   // app.get('/', (req, res) => {
   //   res.sendFile(path.join(__dirname, '../public', 'index.html'));
   // });
-
+  app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+  })
   app.use('/api/users', require('./api/users'))
   app.use('/api/auth', require('./api/auth'))
+
+
 }
 
 const syncDb = () => db.sync()

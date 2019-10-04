@@ -10,10 +10,8 @@ module.exports = (req, res, next) => {
   }
 
   try {
-    console.log(req.user)
     const decoded = jwt.verify(token, JWTSECRET)
     req.user = decoded.user
-    console.log(req.user)
     next()
   } catch (error) {
     res.status(401).json({msg: 'Token is not valid'})
