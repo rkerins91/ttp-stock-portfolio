@@ -6,7 +6,7 @@ import store from './store'
 import Navbar from './components/Navbar'
 import Landing from './components/Landing'
 import Portfolio from './components/Portfolio'
-import Transactions from './components/Transactions'
+import Transactions from './components/TransactionsList'
 
 const App = () => (
   <Provider store={store}>

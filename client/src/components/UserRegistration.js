@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { changeRegistrationInfo, register } from '../store/user'
+import { changeState, register } from '../store/user'
 
 
 class UserRegistration extends Component {
@@ -35,7 +35,7 @@ class UserRegistration extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
-    this.props.changeRegistrationInfo(this.state)
+    this.props.changeState(this.state)
   }
 
   render() {
@@ -56,21 +56,18 @@ class UserRegistration extends Component {
 
 const mapStateToProps = state => {
   return {
-    name: 'signup',
-    displayName: 'Sign Up',
-    error: state.user.error
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     register: (name, email, password) => dispatch(register(name, email, password)),
-    changeRegistrationInfo: (change) => dispatch(changeRegistrationInfo(change))
+    changeState: (change) => dispatch(changeState(change))
   }
 }
 
 
-const Registration = connect(mapStateToProps, mapDispatchToProps)(UserRegistration)
+UserRegistration = connect(mapStateToProps, mapDispatchToProps)(UserRegistration)
 
-export default Registration
+export default UserRegistration
 

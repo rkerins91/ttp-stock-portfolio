@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { changeLoginInfo, login } from '../store/user'
+import { changeState, login } from '../store/user'
 
 class UserLogin extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class UserLogin extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
-    this.props.changeLoginInfo(this.state)
+    this.props.changeState(this.state)
   }
 
   render() {
@@ -45,20 +45,18 @@ class UserLogin extends Component {
 
 const mapStateToProps = state => {
   return {
-    name: 'signup',
-    displayName: 'Sign Up',
-    error: state.user.error
+
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     login: (email, password) => dispatch(login(email, password)),
-    changeLoginInfo: (change) => dispatch(changeLoginInfo(change))
+    changeState: (change) => dispatch(changeState(change))
   }
 }
 
 
-const Login = connect(mapStateToProps, mapDispatchToProps)(UserLogin)
+UserLogin = connect(mapStateToProps, mapDispatchToProps)(UserLogin)
 
-export default Login
+export default UserLogin

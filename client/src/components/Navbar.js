@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import TransactionsList from './TransactionsList';
 
 export default class Navbar extends Component {
   constructor(props) {
