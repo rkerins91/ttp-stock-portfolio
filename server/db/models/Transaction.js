@@ -12,7 +12,8 @@ const Transaction = db.define('transaction', {
     type: Sequelize.INTEGER
   },
   owned: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    defaultValue: true
   }
 })
 
