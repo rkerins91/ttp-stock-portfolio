@@ -2,7 +2,7 @@ import React from 'react'
 
 const PortfolioDisplay = (props) => {
   return (
-    <div>
+    <div id='PortfolioDisplay-container'>
       {/* {props.portfolio.map(ele => )} */}
     </div>
   )
