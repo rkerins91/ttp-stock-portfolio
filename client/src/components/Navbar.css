@@ -1,0 +1,42 @@
+#Navbar {
+  position: fixed;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  background-color: #222222;
+  height: 60px;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+
+}
+
+.Navbar-divider {
+  margin: 0px 32px;
+  font-size: 36px;
+  color: white;
+  text-decoration: none;
+}
+
+#Navbar-title {
+  font-family: 'subway_ticker_gridregular';
+  margin: 0;
+  font-size: 36px;
+  color: #35e535;
+}
+
+#Navbar-link-container {
+  display: flex;
+  justify-content: flex-end
+}
+.Navbar-link {
+  font-family: 'subway_ticker_gridregular';
+  flex-direction: column;
+  margin: 4px 32px;
+  font-size: 30px;
+  color: rgb(226, 0, 0);
+  text-decoration: none;
+}
+
+.Navbar-link:hover {
+  color: #35e535
+}

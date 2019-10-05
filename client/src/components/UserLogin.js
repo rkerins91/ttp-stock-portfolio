@@ -32,11 +32,23 @@ class UserLogin extends Component {
 
   render() {
     return (
-      <div class="form">
+      <div className="Auth-form">
         <form onSubmit={this.handleSubmit}>
-          <input name="email" type="text" value={this.state.email} onChange={this.handleChange} placeholder="Enter Email" />
-          <input name="password" type="password" value={this.state.password} onChange={this.handleChange} placeholder="Enter Password" />
-          <button type='submit'>Login </button>
+          <input 
+            className='Auth-text-input'
+            name="email" 
+            type="text" 
+            value={this.state.email} 
+            onChange={this.handleChange} 
+            placeholder="Enter Email" />
+          <input 
+            className='Auth-text-input'
+            name="password"
+            type="password" 
+            value={this.state.password} 
+            onChange={this.handleChange} 
+            placeholder="Enter Password" />
+          <button className='Auth-submit' type='submit'>Login </button>
         </form>
       </div>
     )

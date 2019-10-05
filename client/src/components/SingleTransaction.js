@@ -1,7 +1,6 @@
 import React from 'react'
 
 const SingleTransaction = (props) => {
-  console.log('single',props)
   return (
     <div>
       <p>{props.transaction.tickerName}</p>
