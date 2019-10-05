@@ -16,9 +16,9 @@ class AddStock extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    console.log(this.props.user)
-    const { ticker, amount, id } = this.props.user 
-    this.props.postTransaction(ticker, amount, id)
+    
+    const { ticker, amount, id, accountBalance} = this.props.user 
+    this.props.postTransaction(ticker, amount, id, accountBalance)
   }
 
   handleChange(event) {
@@ -30,7 +30,7 @@ class AddStock extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{marginLeft:'100px', marginTop:'300px'}}>
         <form onSubmit={this.handleSubmit}>
           <input name='ticker' type='text' value={this.state.ticker} onChange={this.handleChange} />
           <div>
@@ -53,7 +53,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     changeState: (change) => dispatch(changeState(change)),
-    postTransaction: (ticker, amount) => dispatch(postTransaction(ticker, amount))
+    postTransaction: (ticker, amount, id, accountBalance) => dispatch(postTransaction(ticker, amount, id, accountBalance))
   }
 }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { changeState, register } from '../store/user'
+import { Redirect } from 'react-router-dom'
 
 
 class UserRegistration extends Component {
@@ -16,16 +17,17 @@ class UserRegistration extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault()
     if (this.state.password1 === this.state.password2) {
-      this.props.register(
+      await this.props.register(
         {
           name: this.state.name,
           email: this.state.email,
           password: this.state.password1
         }
       )
+
     } else {
       alert('Please enter matching passwords')
     }
@@ -39,14 +41,42 @@ class UserRegistration extends Component {
   }
 
   render() {
+    console.log(this.props.loggedIn)
+    if (this.props.loggedIn) {
+      return <Redirect to='/portfolio' />
+    }
     return (
-      <div className="form">
+      <div className="Auth-form">
         <form onSubmit={this.handleSubmit}>
-          <input name="name" type="text" value={this.state.name} onChange={this.handleChange} placeholder="Enter Name" />
-          <input name="email" type="text" value={this.state.email} onChange={this.handleChange} placeholder="Enter Email" />
-          <input name="password1" type="password" value={this.state.password1} onChange={this.handleChange} placeholder="Enter Password" />
-          <input name="password2" type="password" value={this.state.password2} onChange={this.handleChange} placeholder="Enter Password Again" />
-          <button type='submit'>Login </button>
+          <input 
+            className='Auth-text-input'
+            name="name" 
+            type="text" 
+            value={this.state.name} 
+            onChange={this.handleChange} 
+            placeholder="Enter Name" />
+          <input 
+            className='Auth-text-input'
+            name="email" 
+            type="text" 
+            value={this.state.email} 
+            onChange={this.handleChange} 
+            placeholder="Enter Email" />
+          <input 
+            className='Auth-text-input'
+            name="password1" 
+            type="password" 
+            value={this.state.password1} 
+            onChange={this.handleChange} 
+            placeholder="Enter Password" />
+          <input 
+            className='Auth-text-input'
+            name="password2" 
+            type="password" 
+            value={this.state.password2} 
+            onChange={this.handleChange} 
+            placeholder="Enter Password Again" />
+          <button className='Auth-submit' type='submit'>Login </button>
         </form>
       </div>
     )
@@ -56,6 +86,7 @@ class UserRegistration extends Component {
 
 const mapStateToProps = state => {
   return {
+    loggedIn: state.user.token && true
   }
 }
 

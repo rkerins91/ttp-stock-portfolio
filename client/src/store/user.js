@@ -11,6 +11,7 @@ const initialState = {
   accountBalance: null,
   token: '',
   transactions: [],
+  portfolio: [],
   tickerSymbol: '',
   amount: null
 }
@@ -61,7 +62,8 @@ export const getTransactions = (userId, authKey) => async dispatch => {
   }
 }
 
-export const postTransaction = (symbol, amount, id) => async dispatch => {
+export const postTransaction = (symbol, amount, id, userBalance) => async dispatch => {
+  console.log('ub', userBalance)
   let res
   let transaction
   try {
@@ -79,21 +81,21 @@ export const postTransaction = (symbol, amount, id) => async dispatch => {
     if (res.data["Error Message"]) {
       alert('invalid ticker')
     }
-    const price = Number(data['05. price']) * 100
+    const price = Math.round(Number(data['05. price']) * 100)
+    const newUserBalance = userBalance - price * amount
     transaction = await axios.post('http://localhost:8080/api/transactions',
       {
         tickerName: symbol,
         tradePrice: price,
         tradeAmount: amount,
-        userId: id
+        userId: id,
+        accountBalance: newUserBalance
       })
-    console.log('transaction', transaction)
     return dispatch(addTransaction(transaction))
   } catch (error) {
     console.log(error)
   }
 }
-// export
 
 export default function (state = initialState, action) {
   switch (action.type) {

@@ -1,0 +1,57 @@
+.Auth-container {
+  position: absolute;
+  background-color: #666;
+  border-radius: 8px;
+  height: 400px;
+  width: 550px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
+.Auth-text-input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 20px;
+}
+
+.Auth-submit {
+  width: 100%;
+  background-color: #e20000;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.Auth-submit:hover {
+  background-color: #35e535;
+}
+
+.Auth-tabs-container {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #BBB;
+  border-radius: 4px 4px 0 0;
+  
+}
+
+.Auth-tab {
+  cursor: pointer;
+  width: 50%;
+  height: 100%;
+  text-align: center;
+  font-size: 20px;
+}
+
+.Auth-tab-selected {
+  background-color: #666;
+  border-radius: 4px 4px 0 0;
+}
