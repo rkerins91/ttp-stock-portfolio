@@ -1,8 +1,17 @@
 #Portfolio-container {
+  position: fixed;
   display: grid;
-  grid-column: 50% 50%
+  margin: 60px 0 0 0;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100vw;
+  grid-template-columns: 50% 50%;
+  /* background-color: red */
 }
 
 .Portfolio-element {
-  background-color: red
+  width: 100%;
+  /* background-color: red; */
+  margin: 0 auto;
 }

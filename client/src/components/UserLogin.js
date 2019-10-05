@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { changeState, login } from '../store/user'
+import { Redirect } from 'react-router-dom'
 
 class UserLogin extends Component {
   constructor(props) {
@@ -31,24 +32,28 @@ class UserLogin extends Component {
   }
 
   render() {
+    console.log(this.props.loggedIn)
+    if (this.props.loggedIn) {
+      return <Redirect to='/portfolio' />
+    }
     return (
-      <div className="Auth-form">
+      <div className="Form-form">
         <form onSubmit={this.handleSubmit}>
           <input 
-            className='Auth-text-input'
+            className='Form-text-input'
             name="email" 
             type="text" 
             value={this.state.email} 
             onChange={this.handleChange} 
             placeholder="Enter Email" />
           <input 
-            className='Auth-text-input'
+            className='Form-text-input'
             name="password"
             type="password" 
             value={this.state.password} 
             onChange={this.handleChange} 
             placeholder="Enter Password" />
-          <button className='Auth-submit' type='submit'>Login </button>
+          <button className='Form-submit' type='submit'>Login </button>
         </form>
       </div>
     )
@@ -57,7 +62,7 @@ class UserLogin extends Component {
 
 const mapStateToProps = state => {
   return {
-
+    loggedIn: state.user.token && true
   }
 }
 

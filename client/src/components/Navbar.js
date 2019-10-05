@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import TransactionsList from './TransactionsList';
 import './Navbar.css'
 
@@ -12,6 +12,7 @@ export default class Navbar extends Component {
 
   }
   render() {
+    const activeStyle = {color: '#35e535'}
     return (
       this.state.loggedIn && (
       <div id='Navbar'>
@@ -19,8 +20,8 @@ export default class Navbar extends Component {
           <h1 id='Navbar-title'>TTP Stock Portfolio</h1>
         </div>
         <div className='Navbar-divider' id='Navbar-link-container'>
-          <Link to='/portfolio' className='Navbar-link'>Portfolio</Link>
-          <Link to='/transactions' className='Navbar-link'>Transactions</Link>
+          <NavLink to='/portfolio' className='Navbar-link' activeStyle={activeStyle}>Portfolio</NavLink>
+          <NavLink to='/transactions' className='Navbar-link' activeStyle={activeStyle}>Transactions</NavLink>
         </div>
       </div>
       )

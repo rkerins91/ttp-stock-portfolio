@@ -1,4 +1,4 @@
-.Auth-container {
+.Form-container {
   position: absolute;
   background-color: #666;
   border-radius: 8px;
@@ -9,7 +9,7 @@
   transform: translate(-50%, -50%)
 }
 
-.Auth-text-input {
+.Form-text-input {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -20,7 +20,7 @@
   font-size: 20px;
 }
 
-.Auth-submit {
+.Form-submit {
   width: 100%;
   background-color: #e20000;
   color: white;
@@ -31,11 +31,11 @@
   cursor: pointer;
 }
 
-.Auth-submit:hover {
+.Form-submit:hover {
   background-color: #35e535;
 }
 
-.Auth-tabs-container {
+.Form-tabs-container {
   display: flex;
   justify-content: space-evenly;
   background-color: #BBB;
@@ -43,7 +43,7 @@
   
 }
 
-.Auth-tab {
+.Form-tab {
   cursor: pointer;
   width: 50%;
   height: 100%;
@@ -51,7 +51,7 @@
   font-size: 20px;
 }
 
-.Auth-tab-selected {
+.Form-tab-selected {
   background-color: #666;
   border-radius: 4px 4px 0 0;
 }

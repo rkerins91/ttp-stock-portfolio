@@ -56,7 +56,7 @@ export const getTransactions = (userId, authKey) => async dispatch => {
   try {
     res = await axios.get(`http://localhost:8080/api/users/${userId}/transactions`,
       {
-        headers: { 'x-auth-token': authKey }
+        headers: { 'x-Form-token': authKey }
       }
     )
     dispatch(gotTransactions(res.data.transactions))

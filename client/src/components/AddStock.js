@@ -30,11 +30,11 @@ class AddStock extends Component {
 
   render() {
     return (
-      <div style={{marginLeft:'100px', marginTop:'300px'}}>
+      <div className={this.props.className}>
         <form onSubmit={this.handleSubmit}>
-          <input name='ticker' type='text' value={this.state.ticker} onChange={this.handleChange} />
+          <input name='ticker' className='Form-text-input' type='text' value={this.state.ticker} onChange={this.handleChange} />
           <div>
-            <p>amount</p>
+            <p>Amount</p>
             <input name='amount' type='number' value={this.state.amount} min='1' max='20' onChange={this.handleChange} />
             <button type='submit' >Submit </button>
           </div>
