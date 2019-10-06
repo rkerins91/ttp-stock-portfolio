@@ -22,6 +22,7 @@ const LOGIN_USER = 'LOGIN_USER'
 const GET_TRANSACTIONS = 'GET_TRANSACTIONS'
 const ADD_TRANSACTION = 'ADD_TRANSACTION'
 const GET_PORTFOLIO = 'GET_PORTFOLIO'
+const ADD_PORTFOLIO = 'ADD_PORTFOLIO'
 
 const postUser = key => ({ type: POST_USER, key })
 export const changeState = change => ({ type: CHANGE_STATE, change })
@@ -29,6 +30,7 @@ const loginUser = data => ({ type: LOGIN_USER, data })
 const gotTransactions = transactions => ({ type: GET_TRANSACTIONS, transactions })
 const addTransaction = transaction => ({ type: ADD_TRANSACTION, transaction })
 const gotPortfolio = portfolio => ({type: GET_PORTFOLIO, portfolio})
+const addPortfolio = portfolioAddition => ({type: ADD_PORTFOLIO, portfolioAddition})
 
 export const register = register => async dispatch => {
   let res
@@ -56,7 +58,7 @@ export const getTransactions = (userId, authKey) => async dispatch => {
   try {
     res = await axios.get(`http://localhost:8080/api/users/${userId}/transactions`,
       {
-        headers: { 'x-auth-token': authKey }
+        headers: { 'x-Form-token': authKey }
       }
     )
     dispatch(gotTransactions(res.data.transactions))
@@ -137,11 +139,14 @@ export const postTransaction = (symbol, amount, id, userBalance) => async dispat
         userId: id,
         accountBalance: newUserBalance
       })
-    return dispatch(addTransaction(transaction))
+    
+    dispatch(addTransaction(transaction.data))
   } catch (error) {
     console.log(error)
   }
 }
+
+
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -153,7 +158,7 @@ export default function (state = initialState, action) {
       return { ...state, ...action.data }
     case GET_TRANSACTIONS:
       return { ...state, transactions: [...action.transactions] }
-    case ADD_TRANSACTION: 
+    case ADD_TRANSACTION:
       return { ...state, transactions: [...state.transactions, action.transaction] }
     case GET_PORTFOLIO:
       return { ...state, portfolio: [...action.portfolio]}

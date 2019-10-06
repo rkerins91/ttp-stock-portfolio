@@ -46,37 +46,37 @@ class UserRegistration extends Component {
       return <Redirect to='/portfolio' />
     }
     return (
-      <div className="Auth-form">
+      <div className="Form-form">
         <form onSubmit={this.handleSubmit}>
           <input 
-            className='Auth-text-input'
+            className='Form-text-input'
             name="name" 
             type="text" 
             value={this.state.name} 
             onChange={this.handleChange} 
             placeholder="Enter Name" />
           <input 
-            className='Auth-text-input'
+            className='Form-text-input'
             name="email" 
             type="text" 
             value={this.state.email} 
             onChange={this.handleChange} 
             placeholder="Enter Email" />
           <input 
-            className='Auth-text-input'
+            className='Form-text-input'
             name="password1" 
             type="password" 
             value={this.state.password1} 
             onChange={this.handleChange} 
             placeholder="Enter Password" />
           <input 
-            className='Auth-text-input'
+            className='Form-text-input'
             name="password2" 
             type="password" 
             value={this.state.password2} 
             onChange={this.handleChange} 
             placeholder="Enter Password Again" />
-          <button className='Auth-submit' type='submit'>Login </button>
+          <button className='Form-submit' type='submit'>Login </button>
         </form>
       </div>
     )

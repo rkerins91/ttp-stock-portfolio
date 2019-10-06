@@ -16,8 +16,11 @@ class AddStock extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    this.props.changeState(this.state)
+
     
     const { ticker, amount, id, accountBalance} = this.props.user 
+    console.log(amount)
     this.props.postTransaction(ticker, amount, id, accountBalance)
   }
 
@@ -25,18 +28,20 @@ class AddStock extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
+    console.log('state', this.state)
     this.props.changeState(this.state)
   }
 
   render() {
     return (
-      <div style={{marginLeft:'100px', marginTop:'300px'}}>
+      <div className={this.props.className}>
         <form onSubmit={this.handleSubmit}>
-          <input name='ticker' type='text' value={this.state.ticker} onChange={this.handleChange} />
+          <p>Cash: {this.props.user.accountBalance / 100}</p>
+          <input name='ticker' className='Form-text-input' type='text' value={this.state.ticker} onChange={this.handleChange} />
           <div>
-            <p>amount</p>
-            <input name='amount' type='number' value={this.state.amount} min='1' max='20' onChange={this.handleChange} />
-            <button type='submit' >Submit </button>
+            <p>Amount</p>
+            <input name='amount' className='Form-text-input' type='number' value={this.state.amount} min='1' max='20' onChange={this.handleChange} />
+            <button type='submit' className='Form-submit'>Submit </button>
           </div>
         </form>
       </div>
