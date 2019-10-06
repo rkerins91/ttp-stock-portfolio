@@ -1,5 +1,8 @@
 import axios from 'axios'
+import store from './index'
+import { get } from 'https';
 const { ALPHAAPIKEY } = require('../secrets')
+
 
 
 const initialState = {
@@ -16,29 +19,29 @@ const initialState = {
   amount: null
 }
 
-const POST_USER = 'POST_USER'
 const CHANGE_STATE = 'CHANGE_STATE'
 const LOGIN_USER = 'LOGIN_USER'
 const GET_TRANSACTIONS = 'GET_TRANSACTIONS'
 const ADD_TRANSACTION = 'ADD_TRANSACTION'
 const GET_PORTFOLIO = 'GET_PORTFOLIO'
 const ADD_PORTFOLIO = 'ADD_PORTFOLIO'
+const CHANGE_BALANCE = 'CHANGE_BALANCE'
 
-const postUser = key => ({ type: POST_USER, key })
 export const changeState = change => ({ type: CHANGE_STATE, change })
 const loginUser = data => ({ type: LOGIN_USER, data })
 const gotTransactions = transactions => ({ type: GET_TRANSACTIONS, transactions })
 const addTransaction = transaction => ({ type: ADD_TRANSACTION, transaction })
 const gotPortfolio = portfolio => ({type: GET_PORTFOLIO, portfolio})
+const changeBalance = balance => ({type: CHANGE_BALANCE, balance})
 const addPortfolio = portfolioAddition => ({type: ADD_PORTFOLIO, portfolioAddition})
 
 export const register = register => async dispatch => {
   let res
   try {
     res = await axios.post(`http://localhost:8080/api/users`, register)
-    dispatch(postUser(res.data.token))
+    dispatch(loginUser(res.data))
   } catch (authError) {
-    return dispatch(postUser({ error: authError }))
+    return dispatch(loginUser({ error: authError }))
   }
 }
 
@@ -69,6 +72,7 @@ export const getTransactions = (userId, authKey) => async dispatch => {
 
 export const getPortfolio = (transactions) => async dispatch => {
 
+  console.log('getportfolio')
   const portfolio = {}
 
   for (let key in transactions) {
@@ -104,7 +108,8 @@ export const getPortfolio = (transactions) => async dispatch => {
       stockName: stockInfo['01. symbol'], 
       stockOpen: stockInfo['02. open'], 
       stockPrice: stockInfo['05. price'],
-      stockChange: stockInfo['10. change percent']}
+      stockChange: stockInfo['10. change percent'],
+      quantity: portfolio[stockInfo['01. symbol']]}
   })
   dispatch(gotPortfolio(result))
 }
@@ -141,6 +146,9 @@ export const postTransaction = (symbol, amount, id, userBalance) => async dispat
       })
     
     dispatch(addTransaction(transaction.data))
+    dispatch(changeBalance(newUserBalance))
+    dispatch(getPortfolio(store.getState().user.transactions))
+
   } catch (error) {
     console.log(error)
   }
@@ -150,8 +158,6 @@ export const postTransaction = (symbol, amount, id, userBalance) => async dispat
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case POST_USER:
-      return { ...state, token: action.key }
     case CHANGE_STATE:
       return { ...state, ...action.change }
     case LOGIN_USER:
@@ -162,6 +168,10 @@ export default function (state = initialState, action) {
       return { ...state, transactions: [...state.transactions, action.transaction] }
     case GET_PORTFOLIO:
       return { ...state, portfolio: [...action.portfolio]}
+    case CHANGE_BALANCE: 
+      return { ...state, accountBalance: action.balance}
+    case ADD_PORTFOLIO:
+      return { ...state, portfolio: [...state.portfolio, action.portfolioAddition]}
     default:
       return state
   }

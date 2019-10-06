@@ -39,8 +39,11 @@ router.post('/', [
       JWTSECRET,
       { expiresIn: 360000 },
       (error, token) => {
+        const userRes = user.dataValues
+        delete userRes.password
+        console.log(userRes)
         if (error) throw error
-        res.json({ token })
+        res.json({ ...userRes, token })
       }
     )
 
