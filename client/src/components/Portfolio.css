@@ -15,3 +15,32 @@
   /* background-color: red; */
   margin: 0 auto;
 }
+
+.Portfolio-column-label {
+  width: 25%;
+  font-size: 36px;
+}
+.SinglePortfolioItem-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  font-size: 36px;
+}
+
+.SinglePortfolioItem {
+  width: 25%;
+  margin: 0 16px;
+}
+
+.SinglePortfolioItem-red {
+  color: #e20000;
+}
+
+.SinglePortfolioItem-gray {
+  color: #444
+}
+
+.SinglePortfolioItem-green {
+  color: #35e535
+}

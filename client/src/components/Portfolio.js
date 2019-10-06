@@ -21,8 +21,8 @@ class Portfolio extends Component {
   render() {
     return (
       <div id='Portfolio-container'>
-        <PortfolioDisplay className='Portfolio-element'/>
-        <AddStock className='Portfolio-element'/>
+        <PortfolioDisplay className='Portfolio-element' portfolio={this.props.portfolio} balance={this.props.accountBalance}/>
+        <AddStock className='Portfolio-element' />
       </div>
     )
   }
@@ -32,7 +32,9 @@ const mapStateToProps = state => {
   return {
     transactions: state.user.transactions,
     id: state.user.id,
-    authKey: state.user.token
+    authKey: state.user.token,
+    portfolio: state.user.portfolio,
+    accountBalance: state.user.accountBalance
   }
 }
 
