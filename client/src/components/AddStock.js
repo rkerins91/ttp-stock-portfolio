@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { getUpdatedBalance } from '../store/user'
 import { postTransaction } from '../store/transactions'
 import { addPortfolioEntry } from '../store/portfolio'
-const ALPHAAPIKEY = process.env.ALPHAAPIKEY
+const ALPHAAPIKEY = require('../secrets')
 
 class AddStock extends Component {
   constructor(props) {
