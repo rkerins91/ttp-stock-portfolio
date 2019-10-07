@@ -4,35 +4,36 @@ const { Portfolio } = require('../db/models')
 
 router.post('/', async (req, res) => {
   const { tickerName, amount, userId } = req.body
-  console.log(req.body)
+  let update
   try {
-    console.log('in port try')
     let portfolio = await Portfolio.findAll({
       where: {
         tickerName, userId
       }
     })
-    console.log('portfolio', portfolio == false)
+    let newAmountOwned
     // if entry exists in db, update it with new amount, else create new entry
     if (portfolio.length >= 1) {
-      console.log('inif')
-      portfolio = await Portfolio.update({
+      newAmountOwned = portfolio[0].dataValues.amountOwned + Number(amount)
+      update = await Portfolio.update(
+        {amountOwned: newAmountOwned },
+        {
         where: {
           tickerName, 
           userId
-        },
-        amountOwned: portfolio.amountOwned + amount
-      })
+        }}
+        
+      )
     } else {
-      console.log('in else')
       portfolio = await Portfolio.create({
         tickerName, 
         userId,
         amountOwned: amount
       })
+      newAmountOwned = amount
     }
     // respond with entry
-    res.send(portfolio)
+    res.send({...portfolio, amountOwned: newAmountOwned})
   } catch (error) {
     res.send(400)
   }
