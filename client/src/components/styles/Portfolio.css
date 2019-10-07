@@ -17,7 +17,7 @@
 }
 
 .Portfolio-column-label {
-  width: 25%;
+  width: 33%;
   font-size: 20px;
 }
 .SinglePortfolioItem-container {
@@ -29,7 +29,7 @@
 }
 
 .SinglePortfolioItem {
-  width: 25%;
+  width: 33%;
   margin: 0 16px;
 }
 
