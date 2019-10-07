@@ -27,8 +27,11 @@ class AddStock extends Component {
     const { id, accountBalance, token } = this.props.user
 
     await this.props.postTransaction(this.state.ticker, this.state.amount, id, accountBalance, token)
-    this.props.addPortfolioEntry(this.state.ticker, this.state.amount, id)
-    this.props.updateBalance(id)
+
+    if (accountBalance - this.state.amount * this.props.transactions.tradePrice >= 0) {
+      this.props.addPortfolioEntry(this.state.ticker, this.state.amount, id)
+      this.props.updateBalance(id)
+    }
   }
 
   render() {
