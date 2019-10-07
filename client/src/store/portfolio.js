@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from './index'
-const  ALPHAAPIKEY  = process.env.ALPHAAPIKEY
+const { ALPHAAPIKEY } = require('../secrets')
 
 const initialState = {
   portfolio: [],
