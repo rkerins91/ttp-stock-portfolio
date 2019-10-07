@@ -20,7 +20,7 @@ const getTradePrice = price => ({type: GET_TRADE_PRICE, price})
 // Thunks
 export const getTransactions = (userId, token) => async dispatch => {
   try {
-    const { data } = await axios.get(`http://localhost:8080/api/users/${userId}/transactions`,
+    const { data } = await axios.get(`/api/users/${userId}/transactions`,
       {
         headers: { 'x-form-token': token }
       }
@@ -52,7 +52,7 @@ export const postTransaction = (symbol, amount, id, userBalance, authKey) => asy
     const price = Math.round(Number(data['05. price']) * 100)
     const newUserBalance = userBalance - price * amount
     if (newUserBalance >= 0) {
-      transaction = await axios.post('http://localhost:8080/api/transactions',
+      transaction = await axios.post('/api/transactions',
         {
           tickerName: symbol,
           tradePrice: price,
