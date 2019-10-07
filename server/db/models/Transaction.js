@@ -11,9 +11,11 @@ const Transaction = db.define('transaction', {
   tradeAmount: {
     type: Sequelize.INTEGER
   },
-  owned: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: true
+  type: {
+    type: Sequelize.STRING,
+    validate: {
+      isIn: [['buy', 'sell']]
+    }
   }
 })
 

@@ -1,8 +1,0 @@
-#Portfolio-container {
-  display: grid;
-  grid-column: 50% 50%
-}
-
-.Portfolio-element {
-  background-color: red
-}

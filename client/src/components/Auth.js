@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import UserLogin from './UserLogin'
 import Registration from './UserRegistration'
-import './Auth.css'
+import './styles/Form.css'
 
 export default class Auth extends Component {
   constructor(props) {
@@ -10,12 +10,13 @@ export default class Auth extends Component {
       login: true
     }
   }
+  
   render() {
     return (
-      <div class='Auth-container'>
-        <div class='Auth-tabs-container'>
-          <div className={`Auth-tab ${this.state.login && 'Auth-tab-selected'}`} onClick={() => this.setState({login: true})}>Log In </div>
-          <div className={`Auth-tab ${!this.state.login && 'Auth-tab-selected'}`} onClick={() => this.setState({login: false})}>Sign Up </div>
+      <div className='Form-container'>
+        <div className='Form-tabs-container'>
+          <div className={`Form-tab ${this.state.login && 'Form-tab-selected'}`} onClick={() => this.setState({login: true})}>Log In </div>
+          <div className={`Form-tab ${!this.state.login && 'Form-tab-selected'}`} onClick={() => this.setState({login: false})}>Sign Up </div>
         </div>
         {this.state.login ?
         <UserLogin /> :

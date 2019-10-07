@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { changeState, postTransaction } from '../store/user'
-
+import { getUpdatedBalance } from '../store/user'
+import { postTransaction } from '../store/transactions'
+import { addPortfolioEntry } from '../store/portfolio'
+const ALPHAAPIKEY = process.env.ALPHAAPIKEY
 
 class AddStock extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.state = {
       ticker: '',
@@ -14,29 +16,34 @@ class AddStock extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleSubmit(event) {
-    event.preventDefault()
-    
-    const { ticker, amount, id, accountBalance} = this.props.user 
-    this.props.postTransaction(ticker, amount, id, accountBalance)
-  }
-
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     })
-    this.props.changeState(this.state)
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault()
+    const { id, accountBalance, token } = this.props.user
+
+    await this.props.postTransaction(this.state.ticker, this.state.amount, id, accountBalance, ALPHAAPIKEY)
+
+    if (accountBalance - this.state.amount * this.props.transactions.tradePrice >= 0) {
+      this.props.addPortfolioEntry(this.state.ticker, this.state.amount, id)
+      this.props.updateBalance(id)
+    }
   }
 
   render() {
     return (
-      <div style={{marginLeft:'100px', marginTop:'300px'}}>
+      <div className={this.props.className}>
         <form onSubmit={this.handleSubmit}>
-          <input name='ticker' type='text' value={this.state.ticker} onChange={this.handleChange} />
+          <p>Cash: {this.props.user.accountBalance / 100}</p>
+          <input name='ticker' className='Form-text-input' type='text' value={this.state.ticker} onChange={this.handleChange} />
           <div>
-            <p>amount</p>
-            <input name='amount' type='number' value={this.state.amount} min='1' max='20' onChange={this.handleChange} />
-            <button type='submit' >Submit </button>
+            <p>Amount</p>
+            <input name='amount' className='Form-text-input' type='number' value={this.state.amount} min='1' max='20' onChange={this.handleChange} />
+            <button type='submit' className='Form-submit'>Submit </button>
           </div>
         </form>
       </div>
@@ -46,14 +53,16 @@ class AddStock extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    transactions: state.transactions
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeState: (change) => dispatch(changeState(change)),
-    postTransaction: (ticker, amount, id, accountBalance) => dispatch(postTransaction(ticker, amount, id, accountBalance))
+    updateBalance: (id) => dispatch(getUpdatedBalance(id)),
+    postTransaction: (ticker, amount, id, accountBalance, token) => dispatch(postTransaction(ticker, amount, id, accountBalance, token)),
+    addPortfolioEntry: (tickerName, amount, id, accountBalance) => dispatch(addPortfolioEntry(tickerName, amount, id, accountBalance))
   }
 }
 
