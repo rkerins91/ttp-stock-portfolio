@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import SinglePortfolioItem from './SinglePortfolioItem';
 import { connect } from 'react-redux'
-import { getTransactions, getPortfolio } from '../store/user'
+import { getTransactions } from '../store/transactions'
+import { getPortfolio } from '../store/portfolio'
 
 class PortfolioDisplay extends Component {
   constructor(props) {
@@ -11,10 +12,10 @@ class PortfolioDisplay extends Component {
 
 
   render() {
-    const stockValue = this.props.portfolio.reduce((acc, curr) => {
-      return acc + Number(curr.stockPrice)
-    }, 0)
-    const totalBalance = stockValue + this.props.accountBalance / 100
+    // const stockValue = this.props.portfolio.reduce((acc, curr) => {
+    //   return acc + Number(curr.stockPrice)
+    // }, 0)
+    // const totalBalance = stockValue + this.props.accountBalance / 100
     return (
 
       <div id='PortfolioDisplay-container' className={this.props.className}>
@@ -33,8 +34,8 @@ const mapStateToProps = state => {
   return {
     transactions: state.user.transactions,
     id: state.user.id,
-    authKey: state.user.token,
-    portfolio: state.user.portfolio,
+    token: state.user.token,
+    portfolio: state.portfolio.portfolioDisplayProperties,
     accountBalance: state.user.accountBalance
   }
 }

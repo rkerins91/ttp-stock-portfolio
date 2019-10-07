@@ -7,8 +7,9 @@ const { check, validationResult } = require('express-validator')
 const { User, Transaction, Portfolio } = require('../db/models')
 const { JWTSECRET } = require('../../secrets')
 
-router.get('/', (req, res) => {
-  res.send('user route')
+router.get('/:id', async (req, res) => {
+  const user = await User.findByPk(req.params.id)
+  res.send(user.dataValues)
 })
 
 // Create User and give JSON Web Token
@@ -59,7 +60,6 @@ router.post('/', [
 
 router.get('/:id/transactions', auth, async (req, res) => {
   try {
-
     const id = req.params.id
     const isAuth = Number(id) === req.user.id
     if (isAuth) {
@@ -76,11 +76,11 @@ router.get('/:id/transactions', auth, async (req, res) => {
   }
 })
 
-router.get('/:id/portfolio', auth, async (req, res) => {
+router.get('/:id/portfolio', async (req, res) => {
   try {
     const id = req.params.id
-    const isAuth = Number(id) === req.user.id
-    if (isAuth) {
+    // const isAuth = Number(id) === req.user.id
+    if (true) {
       const user = await User.findOne({
         where: { id },
         include: [{ model: Portfolio }]
