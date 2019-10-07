@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getTransactions} from '../store/user'
+import { getTransactions} from '../store/transactions'
 import SingleTransaction from './SingleTransaction';
-import './Transaction.css'
+import './styles/Transaction.css'
 
 class TransactionsList extends Component {
   constructor(props) {
@@ -18,7 +18,9 @@ class TransactionsList extends Component {
         <p className='SingleTransaction-item'><strong>Price at Time of Purchase</strong></p>
         <p className='SingleTransaction-item'><strong>Amount Purchased</strong></p>
       </div>
-        {this.props.transactions.map((ele, idx) => <SingleTransaction key={idx} transaction={ele}/>)}
+        {this.props.transactions.map((ele, idx) => {
+        return  <SingleTransaction key={idx} transaction={ele}/>}
+        )}
       </div>
     )
   }
@@ -26,9 +28,9 @@ class TransactionsList extends Component {
 
 const mapStateToProps = state => {
   return {
-    transactions: state.user.transactions,
+    transactions: state.transactions.transactions,
     id: state.user.id,
-    authKey: state.user.token
+    token: state.user.token
   }
 }
 

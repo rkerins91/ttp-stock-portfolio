@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { changeState, register } from '../store/user'
+import { register } from '../store/user'
+import { getTransactions } from '../store/transactions'
+import { getPortfolio } from '../store/portfolio'
 import { Redirect } from 'react-router-dom'
 
 
@@ -17,9 +19,21 @@ class UserRegistration extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
   async handleSubmit(event) {
     event.preventDefault()
-    if (this.state.password1 === this.state.password2) {
+    if (this.state.password1 !== this.state.password2) {
+      alert('Please enter matching passwords')
+    } else if (!this.state.name) {
+      alert('Name can not be empty')
+    } else if (this.state.password1.length < 8){
+      alert('Password must have 8 chacters')
+    } else {
       await this.props.register(
         {
           name: this.state.name,
@@ -27,22 +41,11 @@ class UserRegistration extends Component {
           password: this.state.password1
         }
       )
-
-    } else {
-      alert('Please enter matching passwords')
     }
   }
 
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-    this.props.changeState({name: this.state.name, email: this.state.email})
-  }
-
   render() {
-    console.log(this.props.loggedIn)
-    if (this.props.loggedIn) {
+    if (this.props.token) {
       return <Redirect to='/portfolio' />
     }
     return (
@@ -58,7 +61,7 @@ class UserRegistration extends Component {
           <input 
             className='Form-text-input'
             name="email" 
-            type="text" 
+            type="email" 
             value={this.state.email} 
             onChange={this.handleChange} 
             placeholder="Enter Email" />
@@ -83,17 +86,18 @@ class UserRegistration extends Component {
   }
 }
 
-
 const mapStateToProps = state => {
   return {
-    loggedIn: state.user.token && true
+    token: state.user.token,
+    id: state.user.id,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     register: (name, email, password) => dispatch(register(name, email, password)),
-    changeState: (change) => dispatch(changeState(change))
+    getTransactions: (id, token) => dispatch(getTransactions(id, token)),
+    getPortfolio: (transactions) => dispatch(getPortfolio(transactions))
   }
 }
 

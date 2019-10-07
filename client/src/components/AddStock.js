@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { changeState, postTransaction } from '../store/user'
+import { getUpdatedBalance } from '../store/user'
+import { postTransaction } from '../store/transactions'
+import { addPortfolioEntry } from '../store/portfolio'
 
 
 class AddStock extends Component {
-  constructor (props) {
+  constructor(props) {
     super()
     this.state = {
       ticker: '',
@@ -14,18 +16,22 @@ class AddStock extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleSubmit(event) {
-    event.preventDefault()
-    const { amount, id, accountBalance} = this.props.user 
-    console.log(amount)
-    this.props.postTransaction(this.state.ticker, this.state.amount, id, accountBalance)
-  }
-
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     })
-    this.props.changeState(this.state)
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault()
+    const { id, accountBalance, token } = this.props.user
+
+    await this.props.postTransaction(this.state.ticker, this.state.amount, id, accountBalance, token)
+
+    if (accountBalance - this.state.amount * this.props.transactions.tradePrice >= 0) {
+      this.props.addPortfolioEntry(this.state.ticker, this.state.amount, id)
+      this.props.updateBalance(id)
+    }
   }
 
   render() {
@@ -47,14 +53,16 @@ class AddStock extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    transactions: state.transactions
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeState: (change) => dispatch(changeState(change)),
-    postTransaction: (ticker, amount, id, accountBalance) => dispatch(postTransaction(ticker, amount, id, accountBalance))
+    updateBalance: (id) => dispatch(getUpdatedBalance(id)),
+    postTransaction: (ticker, amount, id, accountBalance, token) => dispatch(postTransaction(ticker, amount, id, accountBalance, token)),
+    addPortfolioEntry: (tickerName, amount, id, accountBalance) => dispatch(addPortfolioEntry(tickerName, amount, id, accountBalance))
   }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import './Portfolio.css'
+import './styles/Portfolio.css'
 
 const SinglePortfolioItem = (props) => {
   const { stockName, stockOpen, stockPrice, stockChange } = props.info
