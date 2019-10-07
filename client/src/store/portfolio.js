@@ -75,14 +75,16 @@ export const addPortfolioEntry = (tickerName, amount, id) => async dispatch => {
       }
     )
 
-
+    console.log('storestate',store.getState())
+    let portfolio = store.getState().portfolio.portfolioDisplayProperties
+    if (!portfolio.some(ele => ele.stockName === tickerName)) {
     dispatch(addPortfolio({
       stockName: stockInfo['01. symbol'],
       stockOpen: stockInfo['02. open'],
       stockPrice: stockInfo['05. price'],
       stockChange: stockInfo['10. change percent'],
       quantity: data.amountOwned
-    }))
+    }))}
   }
 
 }
