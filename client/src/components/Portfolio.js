@@ -12,9 +12,10 @@ class Portfolio extends Component {
   }
 
   async componentDidMount() {
+    console.log('PDIDMOUNT')
     const {id, authKey} = this.props 
     await this.props.getTransactions(id, authKey)
-    const {transactions } = this.props
+    const { transactions } = this.props
     this.props.getPortfolio(transactions)
   }
 

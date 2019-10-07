@@ -37,7 +37,7 @@ class UserRegistration extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
-    this.props.changeState(this.state)
+    this.props.changeState({name: this.state.name, email: this.state.email})
   }
 
   render() {

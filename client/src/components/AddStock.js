@@ -16,19 +16,15 @@ class AddStock extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.changeState(this.state)
-
-    
-    const { ticker, amount, id, accountBalance} = this.props.user 
+    const { amount, id, accountBalance} = this.props.user 
     console.log(amount)
-    this.props.postTransaction(ticker, amount, id, accountBalance)
+    this.props.postTransaction(this.state.ticker, this.state.amount, id, accountBalance)
   }
 
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     })
-    console.log('state', this.state)
     this.props.changeState(this.state)
   }
 
