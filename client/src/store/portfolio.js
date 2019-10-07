@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from './index'
-const { ALPHAAPIKEY } = require('../secrets')
+const  ALPHAAPIKEY  = process.env.ALPHAAPIKEY
 
 const initialState = {
   portfolio: [],
@@ -19,13 +19,11 @@ const addPortfolio = portfolioAddition => ({ type: ADD_PORTFOLIO_ENTRY, portfoli
 // Thunks
 export const getPortfolio = (id, token) => async dispatch => {
 
-  const { data } = await axios.get(`http://localhost:8080/api/users/${id}/portfolio`,
+  const { data } = await axios.get(`/api/users/${id}/portfolio`,
     {
       headers: { 'x-form-token': token }
     }
   )
-
-  console.log('dataaaa', data)
 
   const ownedStocks = await Promise.all(data.portfolios.map(async portfolio => {
     return axios.get('https://www.alphavantage.co/query?',
@@ -69,13 +67,12 @@ export const addPortfolioEntry = (tickerName, amount, id) => async dispatch => {
   const stockInfo = displayInfo.data['Global Quote']
   if (stockInfo) {
 
-    const { data } = await axios.post(`http://localhost:8080/api/portfolio`,
+    const { data } = await axios.post(`/api/portfolio`,
       {
         tickerName, amount, userId: id
       }
     )
 
-    console.log('storestate',store.getState())
     let portfolio = store.getState().portfolio.portfolioDisplayProperties
     if (!portfolio.some(ele => ele.stockName === tickerName)) {
     dispatch(addPortfolio({

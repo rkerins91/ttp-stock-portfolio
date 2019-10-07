@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { getUpdatedBalance } from '../store/user'
 import { postTransaction } from '../store/transactions'
 import { addPortfolioEntry } from '../store/portfolio'
-
+const ALPHAAPIKEY = process.env.ALPHAAPIKEY
 
 class AddStock extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class AddStock extends Component {
     event.preventDefault()
     const { id, accountBalance, token } = this.props.user
 
-    await this.props.postTransaction(this.state.ticker, this.state.amount, id, accountBalance, token)
+    await this.props.postTransaction(this.state.ticker, this.state.amount, id, accountBalance, ALPHAAPIKEY)
 
     if (accountBalance - this.state.amount * this.props.transactions.tradePrice >= 0) {
       this.props.addPortfolioEntry(this.state.ticker, this.state.amount, id)

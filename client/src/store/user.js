@@ -1,5 +1,4 @@
 import axios from 'axios'
-const { ALPHAAPIKEY } = require('../secrets')
 
 const initialState = {
   id: null,
@@ -21,7 +20,7 @@ const updateBalance = updatedBalance => ({type: UPDATE_BALANCE, updatedBalance})
 // Thunks
 export const register = register => async dispatch => {
   try {
-    const { data } = await axios.post(`http://localhost:8080/api/users`, register)
+    const { data } = await axios.post(`/api/users`, register)
     delete data.createdAt
     delete data.updatedAt    
     dispatch(loginUser(data))
@@ -32,7 +31,7 @@ export const register = register => async dispatch => {
 
 export const login = (login) => async dispatch => {
   try {
-    const res = await axios.post(`http://localhost:8080/api/auth`, login)
+    const res = await axios.post(`/api/auth`, login)
     delete res.data.createdAt
     delete res.data.updatedAt
     dispatch(loginUser(res.data))
@@ -43,7 +42,7 @@ export const login = (login) => async dispatch => {
 
 export const getUpdatedBalance = (id) => async dispatch => {
   try {
-    const { data } = await axios.get(`http://localhost:8080/api/users/${id}`)
+    const { data } = await axios.get(`/api/users/${id}`)
     dispatch(updateBalance(data.accountBalance))
   } catch (error) {
     console.log('something went wrong')
