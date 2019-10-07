@@ -14,9 +14,7 @@ class PortfolioDisplay extends Component {
     const stockValue = this.props.portfolio.reduce((acc, curr) => {
       return acc + Number(curr.stockPrice)
     }, 0)
-    console.log(this.props.accountBalance)
     const totalBalance = stockValue + this.props.accountBalance / 100
-    console.log(totalBalance)
     return (
 
       <div id='PortfolioDisplay-container' className={this.props.className}>

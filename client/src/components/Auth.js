@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import UserLogin from './UserLogin'
 import Registration from './UserRegistration'
-import './Form.css'
+import './styles/Form.css'
 
 export default class Auth extends Component {
   constructor(props) {

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getTransactions} from '../store/user'
 import SingleTransaction from './SingleTransaction';
-import './Transaction.css'
+import './styles/Transaction.css'
 
 class TransactionsList extends Component {
   constructor(props) {

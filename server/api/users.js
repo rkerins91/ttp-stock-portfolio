@@ -4,13 +4,14 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const auth = require('../../middleware/auth')
 const { check, validationResult } = require('express-validator')
-const { User, Transaction } = require('../db/models')
+const { User, Transaction, Portfolio } = require('../db/models')
 const { JWTSECRET } = require('../../secrets')
 
 router.get('/', (req, res) => {
   res.send('user route')
 })
 
+// Create User and give JSON Web Token
 router.post('/', [
   check('name', 'Name is required').not().isEmpty(),
   check('email', 'Please include a valid email').isEmail(),
@@ -23,6 +24,7 @@ router.post('/', [
 
   const { name, email, password } = req.body
 
+  // create encrypted password
   const salt = await bcrypt.genSalt(10)
   const securePassword = await bcrypt.hash(password, salt)
 
@@ -37,11 +39,10 @@ router.post('/', [
     jwt.sign(
       payload,
       JWTSECRET,
-      { expiresIn: 360000 },
+      { expiresIn: 3600 },
       (error, token) => {
         const userRes = user.dataValues
         delete userRes.password
-        console.log(userRes)
         if (error) throw error
         res.json({ ...userRes, token })
       }
@@ -65,6 +66,24 @@ router.get('/:id/transactions', auth, async (req, res) => {
       const user = await User.findOne({
         where: { id },
         include: [{ model: Transaction }]
+      })
+      res.send(user)
+    } else {
+      res.send(404)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+router.get('/:id/portfolio', auth, async (req, res) => {
+  try {
+    const id = req.params.id
+    const isAuth = Number(id) === req.user.id
+    if (isAuth) {
+      const user = await User.findOne({
+        where: { id },
+        include: [{ model: Portfolio }]
       })
       res.send(user)
     } else {

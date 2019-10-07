@@ -1,6 +1,5 @@
 import axios from 'axios'
 import store from './index'
-import { get } from 'https';
 const { ALPHAAPIKEY } = require('../secrets')
 
 
@@ -9,14 +8,9 @@ const initialState = {
   id: null,
   name: '',
   email: '',
-  password1: '',
-  password2: '',
   accountBalance: null,
   token: '',
-  transactions: [],
-  portfolio: [],
-  tickerSymbol: '',
-  amount: null
+  portfolio: []
 }
 
 const CHANGE_STATE = 'CHANGE_STATE'
@@ -27,13 +21,8 @@ const GET_PORTFOLIO = 'GET_PORTFOLIO'
 const ADD_PORTFOLIO = 'ADD_PORTFOLIO'
 const CHANGE_BALANCE = 'CHANGE_BALANCE'
 
-export const changeState = change => ({ type: CHANGE_STATE, change })
 const loginUser = data => ({ type: LOGIN_USER, data })
-const gotTransactions = transactions => ({ type: GET_TRANSACTIONS, transactions })
-const addTransaction = transaction => ({ type: ADD_TRANSACTION, transaction })
-const gotPortfolio = portfolio => ({type: GET_PORTFOLIO, portfolio})
-const changeBalance = balance => ({type: CHANGE_BALANCE, balance})
-const addPortfolio = portfolioAddition => ({type: ADD_PORTFOLIO, portfolioAddition})
+
 
 export const register = register => async dispatch => {
   let res
@@ -56,7 +45,6 @@ export const login = (login) => async dispatch => {
 }
 
 export const getTransactions = (userId, authKey) => async dispatch => {
-  console.log('get transactions called')
   let res
   try {
     res = await axios.get(`http://localhost:8080/api/users/${userId}/transactions`,
@@ -72,7 +60,6 @@ export const getTransactions = (userId, authKey) => async dispatch => {
 
 export const getPortfolio = (transactions) => async dispatch => {
 
-  console.log('getportfolio')
   const portfolio = {}
 
   for (let key in transactions) {
@@ -85,7 +72,6 @@ export const getPortfolio = (transactions) => async dispatch => {
   }
 
   let tickerSymbols = Object.keys(portfolio)
-  console.log(tickerSymbols)
 
   const ownedStocks = await Promise.all(tickerSymbols.map(async tickerSymbol => {
     return axios.get('https://www.alphavantage.co/query?',
@@ -100,9 +86,7 @@ export const getPortfolio = (transactions) => async dispatch => {
     )
   }
   ))
-  console.log(ownedStocks)
   const result = ownedStocks.map(ele => {
-    console.log(ele)
     const stockInfo = ele.data['Global Quote']
     return {
       stockName: stockInfo['01. symbol'], 
@@ -115,7 +99,6 @@ export const getPortfolio = (transactions) => async dispatch => {
 }
 
 export const postTransaction = (symbol, amount, id, userBalance) => async dispatch => {
-  console.log('ub', userBalance)
   let res
   let transaction
   try {
@@ -129,7 +112,6 @@ export const postTransaction = (symbol, amount, id, userBalance) => async dispat
         }
       }
     )
-    console.log(res)
     const data = res.data['Global Quote']
     if (res.data["Error Message"]) {
       alert('invalid ticker')

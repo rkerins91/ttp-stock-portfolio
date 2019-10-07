@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 const initialState = {
-  transactions: []
+  transactions: [],
 }
 
 const GET_TRANSACTIONS = 'GET_TRANSACTIONS'

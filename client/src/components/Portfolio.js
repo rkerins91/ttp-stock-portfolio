@@ -3,7 +3,7 @@ import AddStock from './AddStock'
 import PortfolioDisplay from './PortfolioDisplay'
 import { connect } from 'react-redux'
 import { getTransactions, getPortfolio } from '../store/user'
-import './Portfolio.css'
+import './styles/Portfolio.css'
 
 class Portfolio extends Component {
   constructor(props) {
@@ -12,7 +12,6 @@ class Portfolio extends Component {
   }
 
   async componentDidMount() {
-    console.log('PDIDMOUNT')
     const {id, authKey} = this.props 
     await this.props.getTransactions(id, authKey)
     const { transactions } = this.props
