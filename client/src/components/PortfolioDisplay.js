@@ -23,7 +23,6 @@ class PortfolioDisplay extends Component {
           <p className="Portfolio-column-label"><strong>TICKER</strong></p>
           <p className="Portfolio-column-label"><strong>OPEN PRICE</strong></p>
           <p className="Portfolio-column-label"><strong>CURRENT PRICE</strong></p>
-          <p className="Portfolio-column-label"><strong>CHANGE</strong></p>
         </div>
         {this.props.portfolio.map((ele, idx) => <SinglePortfolioItem key={idx} info={ele} />)}
       </div>
