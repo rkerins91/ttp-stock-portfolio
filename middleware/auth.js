@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const { JWTSECRET } = require('../secrets')
 
 module.exports = (req, res, next) => {
-  const token = req.header('x-Form-token')
+  const token = req.header('x-form-token')
 
   if (!token) {
     return res.status(401).json({ msg: 'Authorization denied'})

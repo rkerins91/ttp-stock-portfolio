@@ -10,10 +10,11 @@ export default class Auth extends Component {
       login: true
     }
   }
+  
   render() {
     return (
-      <div class='Form-container'>
-        <div class='Form-tabs-container'>
+      <div className='Form-container'>
+        <div className='Form-tabs-container'>
           <div className={`Form-tab ${this.state.login && 'Form-tab-selected'}`} onClick={() => this.setState({login: true})}>Log In </div>
           <div className={`Form-tab ${!this.state.login && 'Form-tab-selected'}`} onClick={() => this.setState({login: false})}>Sign Up </div>
         </div>

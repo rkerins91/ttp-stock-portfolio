@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Portfolio = db.define('transaction', {
+const Portfolio = db.define('portfolio', {
   tickerName: {
     type: Sequelize.STRING
   },

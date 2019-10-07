@@ -22,6 +22,8 @@ const createApp = () => {
   app.use('/api/users', require('./api/users'))
   app.use('/api/auth', require('./api/auth'))
   app.use('/api/transactions', require('./api/transactions'))
+  app.use('/api/portfolio', require('./api/portfolio'))
+  
 
 
 }
