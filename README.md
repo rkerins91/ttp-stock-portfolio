@@ -2,6 +2,10 @@
 
 ## TTP-STOCK_PORTFOLIO APP
 
+### Deployed Link
+
+This app is currently deployed at http://ttp-stock-portfolio.herokuapp.com/
+
 ### To Run Locally
 
 1. Clone repo to local machine
